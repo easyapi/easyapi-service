@@ -24,8 +24,7 @@ export const getBalanceRemindList = (params) => axios.get(`${serviceUrl}/console
  **
  * @see https://www.easyai.com
  */
-export const updateBalanceRemind = (data) => axios.put(`${serviceUrl}/console/serviceEveryday`, data);
-
+export const updateBalanceRemind = (data) => axios.put(`${serviceUrl}/console/balance-remind`, data);
 
 /**
  * 获取每日统计

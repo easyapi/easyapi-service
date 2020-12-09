@@ -56,7 +56,7 @@
             color: #999999;
             font-size: 12px;
           "
-          >此秘钥仅限于短信服务使用</span
+          >此秘钥仅限于{{name}}使用</span
         >
         <span style="line-height: 0px; color: #999999; font-size: 12px"
           >出于安全考虑，建议您周期性的更换密钥</span
@@ -88,7 +88,7 @@ import { resetKey, getTeamService } from "../../api/team-service";
 
 export default {
   name: "SettingSecret",
-  props: ["teamServiceId"],
+  props: ["teamServiceId","name"],
   data() {
     return {
       ruleValidate: {

@@ -13,7 +13,6 @@
           <i-switch
             size="large"
             v-model="switch1"
-            @on-change="change"
             style="margin-left: 14px"
           >
             <span slot="open" style="color: #fff">开启</span>
@@ -140,13 +139,6 @@ export default {
     };
   },
   methods: {
-    change(status) {
-      if (status) {
-        this.$Message.info("开启提醒");
-      } else {
-        this.$Message.info("取消提醒");
-      }
-    },
     //余额提醒上限
     getBalanceRemind() {
       getBalanceRemind(this.serviceId)
@@ -227,8 +219,8 @@ export default {
         num = this.remainDay;
         console.log(this.remainDay);
       }
-      // let url = `https://team.easyapi.com/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
-      let url = `http://localhost:8081/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
+      let url = `https://team.easyapi.com/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
+      // let url = `http://localhost:1000/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
       let a = document.createElement("a");
       a.href = url;
       a.target = "_blank";

@@ -244,7 +244,7 @@
         </div>
         <!--秘钥管理-->
         <div class="modal_left" v-if="nowIndex === 0">
-          <setting-secret :teamServiceId="teamServiceId"></setting-secret>
+          <setting-secret :teamServiceId="teamServiceId" :name="name"></setting-secret>
         </div>
         <!--成员管理-->
         <div class="modal_left" v-if="nowIndex === 1">
