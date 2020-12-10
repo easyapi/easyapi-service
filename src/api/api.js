@@ -2,7 +2,7 @@ export const serviceUrl = "https://api2.easyapi.com";
 
 export const accountUrl = "https://account-api.easyapi.com";
 
-import axios from "./request";
+import axios from "../utils/request";
 
 /**
  * 获取我的余额提醒

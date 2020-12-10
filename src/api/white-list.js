@@ -1,6 +1,6 @@
 import { serviceUrl } from "./api";
 
-import axios from "./request";
+import axios from "../utils/request";
 
 /**
  * 获取我的白名单
