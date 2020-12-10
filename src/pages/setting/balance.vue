@@ -220,7 +220,7 @@ export default {
         console.log(this.remainDay);
       }
       let url = `https://team.easyapi.com/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
-      // let url = `http://localhost:1000/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
+      // let url = `http://localhost:9999/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
       let a = document.createElement("a");
       a.href = url;
       a.target = "_blank";
