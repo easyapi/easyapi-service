@@ -48,11 +48,7 @@
           </li>
           <li>{{ staff.type }}</li>
         </ul>
-        <Modal v-model="deleteModel" @on-ok="prompt" width="360">
-          <p slot="header" style="color: #f60; text-align: center">
-            <Icon type="ios-information-circle"></Icon>
-            <span>删除确认</span>
-          </p>
+        <Modal v-model="deleteModel" @on-ok="prompt" width="360"  title="提示">
           <p style="text-align: center; color: #333; font-size: 16px">
             确定删除成员{{ nickname }}吗?
           </p>
@@ -103,14 +99,11 @@
             </ul>
             <Modal
               v-model="frame"
+              title="提示"
               @on-ok="Sure"
               width="360"
               class="dialogue"
             >
-              <p slot="header" style="color: #f60; text-align: center">
-                <Icon type="ios-information-circle"></Icon>
-                <span>添加确认</span>
-              </p>
               <p
                 style="
                   text-align: center;
