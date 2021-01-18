@@ -1,4 +1,5 @@
 export const serviceUrl = "https://api2.easyapi.com";
+// export const serviceUrl = "http://localhost:9898";
 
 export const accountUrl = "https://account-api.easyapi.com";
 

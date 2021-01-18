@@ -19,7 +19,6 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import './assets/styles/color.styl';
 
   main {
     padding-top: 50px;

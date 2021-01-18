@@ -39,7 +39,7 @@
         </p>
         <div style="padding-left: 48px; display: flex">
           <span style="line-height: 60px; color: #000; font-size: 14px"
-            >通知人员：</span
+          >通知人员：</span
           >
           <span style="margin-left: 20px; height: auto; width: 80%">
             <CheckboxGroup
@@ -71,7 +71,7 @@
                 />
                 <span
                   style="margin-left: 53px; color: #333333; font-size: 14px"
-                  >{{ User.user.nickname }}</span
+                >{{ User.user.nickname }}</span
                 >
               </Checkbox>
             </CheckboxGroup>
@@ -89,7 +89,7 @@
             color: #fff;
             margin-top: 40px;
           "
-          >续费
+        >续费
         </Button>
       </div>
     </div>
@@ -105,7 +105,7 @@
           margin-left: 120px;
           margin-top: 10px;
         "
-        >保存设置
+      >保存设置
       </Button>
     </div>
     <div class="ea-warnBox">
@@ -120,69 +120,59 @@
 </template>
 
 <script>
-import {
-  updateBalanceRemind,
-  getBalanceRemind,
-  getBalanceRemindList,
-} from "../../api/api";
-import { getServiceUserList } from "../../api/user-service";
+  import {
+    updateBalanceRemind,
+    getBalanceRemind,
+    getBalanceRemindList
+  } from "../../api/api";
+  import { getServiceUserList } from "../../api/user-service";
 
-export default {
-  name: "SettingBalance",
-  props: ["judgmentUnit", "balance", "remainDay", "type", "serviceId", "name"],
-  data() {
-    return {
-      switch1: "", //提醒开关
-      balanceWarnNo: 0,
-      checkbox: [],
-      tipsMember: [],
-    };
-  },
-  methods: {
-    //余额提醒上限
-    getBalanceRemind() {
-      getBalanceRemind(this.serviceId)
-        .then((res) => {
+  export default {
+    name: "SettingBalance",
+    props: ["judgmentUnit", "balance", "remainDay", "type", "serviceId", "name"],
+    data() {
+      return {
+        switch1: "", //提醒开关
+        balanceWarnNo: 0,
+        checkbox: [],
+        tipsMember: []
+      };
+    },
+    methods: {
+      //余额提醒上限
+      getBalanceRemind() {
+        getBalanceRemind(this.serviceId).then((res) => {
           if (res.data.code === 0) {
             this.switch1 = false;
           } else {
             this.switch1 = true;
             this.balanceWarnNo = res.data.content.count;
           }
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.data.code === -1) {
-            this.$Message.warning(error.data.message);
-          } else {
-            this.$Message.error("数据错误");
-          }
+        }).catch((error) => {
+          this.$Message.warning(error.data.message);
         });
-    },
-    //修改余额提醒设置
-    updateBalanceRemind() {
-      let data = {
-        remindUserIds: this.checkbox.join(","),
-        ifRemind: this.switch1,
-        serviceId: this.serviceId,
-        count: this.balanceWarnNo,
-      };
-      updateBalanceRemind(data)
-        .then((res) => {
+      },
+      //修改余额提醒设置
+      updateBalanceRemind() {
+        let data = {
+          remindUserIds: this.checkbox.join(","),
+          ifRemind: this.switch1,
+          serviceId: this.serviceId,
+          count: this.balanceWarnNo
+        };
+        updateBalanceRemind(data).then((res) => {
           this.$Message.success(res.data.message);
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.log(error);
           this.$Message.error(error.response.data.message);
         });
-    },
-    //提示人员
-    getBalanceRemindList() {
-      let params = {
-        serviceId: this.serviceId,
-      };
-      getBalanceRemindList(params)
-        .then((res) => {
+      },
+      //提示人员
+      getBalanceRemindList() {
+        let params = {
+          serviceId: this.serviceId
+        };
+        getBalanceRemindList(params).then((res) => {
           this.selectedPersonnel = res.data.content;
           let code = res.data.code;
           if (code !== 0) {
@@ -190,92 +180,87 @@ export default {
               this.checkbox[i] = this.selectedPersonnel[i].remindUser.id;
             }
           }
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.log(error);
         });
-    },
-    //余额提醒成员列表
-    getServiceUserList() {
-      let params = {
-        size: 100,
-        types: "创建人,管理员",
-      };
-      getServiceUserList(this.serviceId, params)
-        .then((res) => {
+      },
+      //余额提醒成员列表
+      getServiceUserList() {
+        let params = {
+          size: 100,
+          types: "创建人,管理员"
+        };
+        getServiceUserList(this.serviceId, params).then((res) => {
           this.tipsMember = res.data.content;
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.log(error);
         });
-    },
-    //续费跳转页面
-    renew() {
-      let num;
-      if (this.type == 2) {
-        num = this.balance;
-        console.log(this.balance);
-      } else if (this.type == 3) {
-        num = this.remainDay;
-        console.log(this.remainDay);
+      },
+      //续费跳转页面
+      renew() {
+        let num;
+        if (this.type == 2) {
+          num = this.balance;
+        } else if (this.type == 3) {
+          num = this.remainDay;
+        }
+        let url = `https://team.easyapi.com/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
+        // let url = `http://localhost:9999/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
+        let a = document.createElement("a");
+        a.href = url;
+        a.target = "_blank";
+        a.click();
       }
-      let url = `https://team.easyapi.com/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
-      // let url = `http://localhost:9999/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
-      let a = document.createElement("a");
-      a.href = url;
-      a.target = "_blank";
-      a.click();
     },
-  },
-  created() {
-    this.getBalanceRemind();
-    this.getBalanceRemindList();
-    this.getServiceUserList();
-  },
-};
+    created() {
+      this.getBalanceRemind();
+      this.getBalanceRemindList();
+      this.getServiceUserList();
+    }
+  };
 </script>
 <style lang="stylus">
-.secret_balance {
-  width: 100%;
-  height: auto;
-  display: flex;
-}
+  .secret_balance {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
 
-.secret_balance .balance_remind {
-  width: 80%;
-  height: auto;
-}
+  .secret_balance .balance_remind {
+    width: 80%;
+    height: auto;
+  }
 
-.secret_balance .balance_remind p {
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  padding-left: 20px;
-}
+  .secret_balance .balance_remind p {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+  }
 
-.secret_balance .balance_remind p span {
-  color: #000000;
-  font-size: 14px;
-}
+  .secret_balance .balance_remind p span {
+    color: #000000;
+    font-size: 14px;
+  }
 
-.balance_btn {
-  width: 20%;
-  height: auto;
-}
+  .balance_btn {
+    width: 20%;
+    height: auto;
+  }
 
-.btn {
-  width: 100%;
-  height: 60px;
-}
+  .btn {
+    width: 100%;
+    height: 60px;
+  }
 
-.ea-warnBox {
-  width: 100%;
-  height: auto;
-  padding-left: 130px;
-}
+  .ea-warnBox {
+    width: 100%;
+    height: auto;
+    padding-left: 130px;
+  }
 
-.ea-warnBox p {
-  color: #999999;
-  font-size: 14px;
-}
+  .ea-warnBox p {
+    color: #999999;
+    font-size: 14px;
+  }
 </style>

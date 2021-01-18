@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 // 添加请求拦截器
 axios.interceptors.request.use(
   function(config) {
-    if (config.url.indexOf("/page/team") == -1) {
+    if (config.url.indexOf("/page/ea-team") == -1) {
       if (!Cookies.get("authenticationToken")) {
         location.href = "https://account.easyapi.com/login?from=https://service.easyapi.com"; // 如果没有authenticationToken存在
       }
@@ -33,7 +33,7 @@ axios.interceptors.response.use(
       window.location.href = "https://account.easyapi.com/login?from=https://service.easyapi.com";
     } else if (error.response.data.code === -8) {
       // 处理-8无团队信息
-      window.location.href = "https://team.easyapi.com";
+      window.location.href = "https://ea-team.easyapi.com";
     } else if (error.response.data.code === -7) {
       // 处理-7认证失败
       router.push(`/unavailable`);

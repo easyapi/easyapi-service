@@ -4,7 +4,7 @@ const team = {
   state: {
     currentTeam: "",
     teamName: "",
-    teamAvatar: "",
+    teamImg: "https://qiniu.easyapi.com/ea-team/default.png",
     teamList: []
   },
 
@@ -15,8 +15,8 @@ const team = {
     SET_TEAM_NAME: (state, teamName) => {
       state.teamName = teamName;
     },
-    SET_TEAM_AVATAR: (state, teamAvatar) => {
-      state.teamAvatar = teamAvatar;
+    SET_TEAM_IMG: (state, teamImg) => {
+      state.teamImg = teamImg;
     },
     SET_TEAM_LIST: (state, teamList) => {
       state.teamList = teamList;

@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import EaTeam from "./ea-team/EaTeam";
+import EaTeam from "./ea-team/ea-team";
 export default {
   name: "Header",
   components: {
@@ -71,7 +71,7 @@ export default {
       (e) => {
         if (
           e.target.id === "showTeamInfo" ||
-          e.target.className === "team-icon"
+          e.target.className === "ea-team-icon"
         ) {
           this.isActive = false;
           this.showTeamInfo = !this.showTeamInfo;

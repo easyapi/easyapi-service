@@ -37,17 +37,17 @@
           @click="stand('最近7天', 7)"
         >最近7天</span
         >
-        <span
+        <spanx-bar
           :class="{ selection: Switching === '最近30天' }"
           @click="stand('最近30天', 30)"
-        >最近30天</span
+        >最近30天</spanx-bar
         >
       </div>
     </div>
     <div class="statistics_conter">
       <div class="Statistical">
         <h6 class="frequency">请求次数</h6>
-        <x-chart id="highcharts" class="high" :option="option"></x-chart>
+        <stat-chart id="highcharts" class="high" :option="option"></stat-chart>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
 <script>
   // 导入chart组件
   let chart = {};
-  import XChart from "../components/chart/highcharts";
+  import StatChart from "../components/chart/stat";
   import { getServiceEveryday } from "../api/api";
   import { getUserServiceList } from "../api/user-service";
   import moment from "moment";
@@ -236,7 +236,7 @@
       this.getUserService();
     },
     components: {
-      XChart
+      StatChart
     },
     created() {
       this.serviceId = this.$route.query.serviceId;
