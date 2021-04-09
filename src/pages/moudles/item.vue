@@ -265,6 +265,7 @@
             :type="type"
             :serviceId="serviceId"
             :name="name"
+            :teamServiceId="teamServiceId"
           ></setting-balance>
         </div>
       </div>
@@ -343,7 +344,7 @@
         } else if (type == 3) {
           num = teamService.remainDay;
         }
-        let url = `https:///team.easyapi.com/service/pay?type=${type}&serviceId=${serviceId}&serviceName=${name}&num=${num}`;
+        let url = `https:///team.easyapi.com/renew/service?teamServiceId=${this.teamServiceId}`;
         let a = document.createElement("a");
         a.href = url;
         a.target = "_blank";

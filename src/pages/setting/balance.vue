@@ -129,7 +129,7 @@
 
   export default {
     name: "SettingBalance",
-    props: ["judgmentUnit", "balance", "remainDay", "type", "serviceId", "name"],
+    props: ["judgmentUnit", "balance", "remainDay", "type", "serviceId", "name","teamServiceId"],
     data() {
       return {
         switch1: "", //提醒开关
@@ -204,8 +204,7 @@
         } else if (this.type == 3) {
           num = this.remainDay;
         }
-        let url = `https://team.easyapi.com/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
-        // let url = `http://localhost:9999/service/pay?type=${this.type}&serviceId=${this.serviceId}&serviceName=${this.name}&num=${num}`;
+        let url = `https://team.easyapi.com/renew/service?teamServiceId=${this.teamServiceId}`;
         let a = document.createElement("a");
         a.href = url;
         a.target = "_blank";
