@@ -344,7 +344,8 @@
         } else if (type == 3) {
           num = teamService.remainDay;
         }
-        let url = `https:///team.easyapi.com/renew/service?teamServiceId=${this.teamServiceId}`;
+
+        let url = `https:///team.easyapi.com/renew/service?teamServiceId=${teamService.teamServiceId}`;
         let a = document.createElement("a");
         a.href = url;
         a.target = "_blank";
