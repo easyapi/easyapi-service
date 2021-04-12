@@ -111,9 +111,9 @@
     <div class="ea-warnBox">
       <p>备注：</p>
       <p>1、单击"开启"或"关闭" 控件改变提醒状态</p>
-      <p>2、单机 进入编辑模式，更改余额提醒上限</p>
-      <p>3、单机 添加提醒列表</p>
-      <p>4、单机提醒列表中 按钮删除该联系人</p>
+      <p>2、单击 进入编辑模式，更改余额提醒上限</p>
+      <p>3、单击添加提醒列表</p>
+      <p>4、单击提醒列表中 按钮删除该联系人</p>
       <p>5、请注意： 提醒方式和提醒列表是账户共享设置</p>
     </div>
   </div>
@@ -163,7 +163,6 @@
         updateBalanceRemind(data).then((res) => {
           this.$Message.success(res.data.message);
         }).catch((error) => {
-          console.log(error);
           this.$Message.error(error.response.data.message);
         });
       },

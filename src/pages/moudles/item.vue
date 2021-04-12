@@ -87,7 +87,7 @@
                 >
                   剩余
                   <span
-                    v-if="item.teamService.remainDay < 100"
+                    v-if="item.teamService.remainDay < 30"
                     style="color: #ff4a53"
                   >{{ item.teamService.remainDay }}</span
                   >
@@ -100,7 +100,7 @@
                 >已到期</span
                 >
                 <span
-                  v-if="item.teamService.remainDay <= 30"
+                  v-if="item.teamService.remainDay < 30"
                   @click.stop="pay(item)"
                   style="
                     display: block;

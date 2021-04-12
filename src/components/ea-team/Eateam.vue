@@ -2,13 +2,13 @@
   <div class="current-team-info">
     <h2 class="current-team-name lrPading-20">当前团队</h2>
     <div class="clear current-team-content lrPading-20">
-      <img class="lf teams-img" :src="teamImg + '!icon.jpg'" alt />
+      <img class="lf teams-img" :src="teamImg ? teamImg + '?icon.jpg' : 'https://qiniu.easyapi.com/team/default.png?icon.jpg'" alt />
       <div class="lf teams-img-r">
         <p>{{ teamName }}</p>
-        <div class="team-btn">
-          <router-link class="ea-btn" to="/account">账户</router-link>
-          <router-link class="ea-btn" to="/members">成员</router-link>
-          <router-link class="ea-btn" to="/orders">订单</router-link>
+        <div class="create-team">
+           <Button type="info" class="ea-info-btn" to="https://team.easyapi.com/new"
+            >创建新团队
+           </Button>
         </div>
       </div>
     </div>
@@ -22,15 +22,10 @@
           v-bind:key="index"
           @click="changeTeam(item.team.id)"
         >
-          <img :src="item.team.img + '!icon.jpg'" alt />
+          <img :src="item.team.img ? item.team.img + '?icon.jpg' : 'https://qiniu.easyapi.com/team/default.png?icon.jpg'" alt />
           <span style="display: block">{{ item.team.name }}</span>
         </a>
       </div>
-    </div>
-    <div class="create-team">
-      <Button type="info" class="ea-info-btn" to="https://team.easyapi.com/new"
-        >创建新团队
-      </Button>
     </div>
   </div>
 </template>
@@ -60,7 +55,7 @@ export default {
   },
 };
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 .current-team-info {
     max-height:700px;
     overflow-y:auto;
@@ -78,6 +73,7 @@ export default {
     border-bottom-left-radius: 5px;
     display: none;
     z-index: 9999;
+    color #000;
 
     &.active {
       display: block;
@@ -87,6 +83,7 @@ export default {
       height: 50px;
       line-height: 50px;
       font-weight: bold;
+      padding-left 20px;
       border-bottom: 1px solid #eaeaea;
     }
 
@@ -113,7 +110,7 @@ export default {
           color: #333;
           height: auto;
           line-height: 16px;
-          font-size: 1rem;
+          font-size: 16px;
           padding-top: 10px;
         }
 
@@ -136,7 +133,8 @@ export default {
     }
 
     .change-team-box {
-      border-bottom: 1px solid #eaeaea;
+      // border-bottom: 1px solid #eaeaea;
+      padding-left 20px;
 
       & > h2 {
         height: 50px;
@@ -158,7 +156,7 @@ export default {
         .ea-team-item {
           width: 50%;
           color: #333;
-          font-size: 1rem;
+          font-size: 14px;
           font-weight: normal;
           height: auto;
           display: flex;
