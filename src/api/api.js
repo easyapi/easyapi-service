@@ -1,4 +1,4 @@
-export const serviceUrl = "https://api2.easyapi.com";
+export const serviceUrl = "https://api.easyapi.com";
 // export const serviceUrl = "http://localhost:9898";
 
 export const accountUrl = "https://account-api.easyapi.com";
@@ -32,4 +32,4 @@ export const updateBalanceRemind = (data) => axios.put(`${serviceUrl}/console/ba
  **
  * @see https://www.easyai.com
  */
-export const getServiceEveryday = (params) => axios.get(`${serviceUrl}/console/serviceEveryday`, { params: params });
+export const getServiceEveryday = (params) => axios.get(`${serviceUrl}/console/service-everydays`, { params: params });

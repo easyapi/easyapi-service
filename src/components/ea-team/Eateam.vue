@@ -1,19 +1,39 @@
 <template>
   <div class="current-team-info">
-    <h2 class="current-team-name lrPading-20">当前团队</h2>
+    <div class="current-team-name lrPading-20">
+      <a href="https://doc.easyapi.com/" class="ea-link">文档</a>
+      <a href="https://monitor.easyapi.com/" class="ea-link">监控</a>
+      <a href="https://gateway.easyapi.com/" class="ea-link">网关</a>
+      <a href="https://service.easyapi.com/" class="ea-link">服务</a>
+    </div>
     <div class="clear current-team-content lrPading-20">
-      <img class="lf teams-img" :src="teamImg ? teamImg + '?icon.jpg' : 'https://qiniu.easyapi.com/team/default.png?icon.jpg'" alt />
+      <img
+        class="lf teams-img"
+        :src="
+          teamImg
+            ? teamImg + '?icon.jpg'
+            : 'https://qiniu.easyapi.com/team/default.png?icon.jpg'
+        "
+        alt
+      />
       <div class="lf teams-img-r">
         <p>{{ teamName }}</p>
-        <div class="create-team">
-           <Button type="info" class="ea-info-btn" to="https://team.easyapi.com/new"
-            >创建新团队
-           </Button>
+        <div class="team-btn">
+          <a href="https://team.easyapi.com/account" class="ea-btn">账户</a>
+          <a href="https://team.easyapi.com/members" class="ea-btn">成员</a>
+          <a href="https://team.easyapi.com/orders" class="ea-btn">订单</a>
         </div>
       </div>
     </div>
     <div class="change-team-box">
-      <h2 class="lrPading-20">切换团队：</h2>
+      <h2 class="lrPading-20">
+        切换团队：<Button
+          type="info"
+          class="ea-info-btn"
+          to="https://team.easyapi.com/new"
+          >创建新团队
+        </Button>
+      </h2>
       <div class="ea-team-list-box lrPading-20">
         <a
           href="JavaScript:void(0)"
@@ -22,7 +42,14 @@
           v-bind:key="index"
           @click="changeTeam(item.team.id)"
         >
-          <img :src="item.team.img ? item.team.img + '?icon.jpg' : 'https://qiniu.easyapi.com/team/default.png?icon.jpg'" alt />
+          <img
+            :src="
+              item.team.img
+                ? item.team.img + '?icon.jpg'
+                : 'https://qiniu.easyapi.com/team/default.png?icon.jpg'
+            "
+            alt
+          />
           <span style="display: block">{{ item.team.name }}</span>
         </a>
       </div>
@@ -82,9 +109,15 @@ export default {
     .current-team-name {
       height: 50px;
       line-height: 50px;
-      font-weight: bold;
-      padding-left 20px;
+      padding:0 20px;
       border-bottom: 1px solid #eaeaea;
+      display flex ;
+      justify-content space-between
+      .ea-link{
+        height 50px;
+        display inline-block;
+        color #333;
+      }
     }
 
     .current-team-content {
@@ -103,7 +136,7 @@ export default {
       .teams-img-r {
         display: inline-block;
         height: 99px;
-        vertical-align: top;
+        vertical-align: top ;
         padding-left: 20px;
 
         & > p {
@@ -140,6 +173,7 @@ export default {
         height: 50px;
         line-height: 50px;
         font-weight: bold;
+        font-size 20px
       }
 
       .ea-team-list-box {

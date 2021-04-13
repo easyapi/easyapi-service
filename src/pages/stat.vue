@@ -11,10 +11,10 @@
         @on-change="switchingService()"
       >
         <Option
-          :value="informations.service.serviceId"
           v-for="(informations, informationsIndex) in teamInformation"
+          :value="informations.value"
           :key="informationsIndex"
-        >{{ informations.service.name }}
+        >{{ informations.label }}
         </Option
         >
       </Select>
@@ -37,17 +37,17 @@
           @click="stand('最近7天', 7)"
         >最近7天</span
         >
-        <spanx-bar
+        <span
           :class="{ selection: Switching === '最近30天' }"
           @click="stand('最近30天', 30)"
-        >最近30天</spanx-bar
+        >最近30天</span
         >
       </div>
     </div>
     <div class="statistics_conter">
       <div class="Statistical">
         <h6 class="frequency">请求次数</h6>
-        <stat-chart id="highcharts" class="high" :option="option"></stat-chart>
+        <stat-chart ref="child" id="highcharts" class="high" :option="option"></stat-chart>
       </div>
     </div>
   </div>
@@ -67,11 +67,10 @@
         teamInformation: "",
         Switching: "最近7天",
         timeAndDate: "",
-        seriesData: "",
         startDay: "", //开始时间
         endDay: "", //截止时间
         dayArr: [],
-        statisticsTimes: "",
+       
         item: 7,
         option: {},
         data: [
@@ -132,20 +131,13 @@
       },
       getItem() {
         for (let i = 0; i < this.item; i++) {
-          const ymd = new Date(new Date() - 24 * 60 * 60 * 1000 * i).toLocaleString().split(" ")[0];
-          const ymdarr = ymd.split("/");
-          if (ymdarr[1] * 1 < 10) {
-            ymdarr[1] = "0" + ymdarr[1];
-          }
-          if (ymdarr[2] * 1 < 10) {
-            ymdarr[2] = "0" + ymdarr[2];
-          }
-          this.dayArr.unshift(ymdarr.join("-"));
+          const ymd = moment(new Date().getTime() - 24 * 60 * 60 * 1000 * i).format("YYYY-MM-DD");
+          this.dayArr.unshift(ymd);
         }
         this.startDay = this.dayArr[0];
         let index = this.dayArr.length - 1;
         this.endDay = this.dayArr[index];
-        this.other.xAxis.categories = this.dayArr;
+        this.timeAndDate = [this.dayArr[0].split(" ")[0],this.dayArr[index].split(" ")[0]]
         this.getTimeAndDate();
       },
       //选择时间
@@ -153,40 +145,6 @@
         this.Switching = style;
         this.startDay = moment(par[0]).format("YYYY-MM-DD");
         this.endDay = moment(par[1]).format("YYYY-MM-DD");
-        this.getBetweenDateStr();
-      },
-      getBetweenDateStr() {
-        this.dayArr = [];
-        var beginDay = this.startDay.split("-");
-        var endDay = this.endDay.split("-");
-        var diffDay = new Date();
-        var dateList = new Array();
-        var i = 0;
-        diffDay.setDate(beginDay[2]);
-        diffDay.setMonth(beginDay[1] - 1);
-        diffDay.setFullYear(beginDay[0]);
-        this.dayArr.push(this.startDay);
-        while (i == 0) {
-          var countDay = diffDay.getTime() + 24 * 60 * 60 * 1000;
-          diffDay.setTime(countDay);
-          dateList[2] = diffDay.getDate();
-          dateList[1] = diffDay.getMonth() + 1;
-          dateList[0] = diffDay.getFullYear();
-          if (String(dateList[1]).length == 1) {
-            dateList[1] = "0" + dateList[1];
-          }
-          if (String(dateList[2]).length == 1) {
-            dateList[2] = "0" + dateList[2];
-          }
-          this.dayArr.push(dateList[0] + "-" + dateList[1] + "-" + dateList[2]);
-          if (
-            dateList[0] == endDay[0] &&
-            dateList[1] == endDay[1] &&
-            dateList[2] == endDay[2]
-          ) {
-            i = 1;
-          }
-        }
         this.getTimeAndDate();
       },
       //接口统计
@@ -194,19 +152,23 @@
         let params = {
           serviceId: this.serviceId,
           startDay: this.startDay + " 00:00:00",
-          endDay: this.endDay + " 00:00:00",
+          endDay: this.endDay + " 23:59:59",
           size: 500
         };
         getServiceEveryday(params).then(res => {
-          this.data[0].data = [];
-          this.statisticsTimes = res.data.content;
-          if (res.data.code !== 0) {
-            for (var i = 0; i < this.statisticsTimes.length; i++) {
-              this.$set(this.data[0].data, i, this.statisticsTimes[i].count);
+          if(res.data.code === 1){
+            let data = []
+            let timeArr = []
+            for(let item of res.data.content){
+              timeArr.push(item.day.split(" ")[0])
+              data.push(item.count)
             }
+            this.data[0].data = data
+            this.other.xAxis.categories = timeArr
+            chart.other.series = chart.data; //数据
+            chart.option = chart.other;
+            this.$refs.child.getHighCharts();
           }
-          chart.other.series = chart.data; //数据
-          chart.option = chart.other;
         }).catch(error => {
           console.log(error);
         });
@@ -218,7 +180,14 @@
           size: 50
         };
         getUserServiceList(params).then(res => {
-          this.teamInformation = res.data.content;
+          let data = []
+          for(let item of res.data.content){
+            data.push({
+              value: item.service.serviceId,
+              label: item.service.name
+            })
+          }
+          this.teamInformation = data;
         }).catch(error => {
           console.log(error);
         });
@@ -232,15 +201,13 @@
       chart = this;
     },
     mounted: function() {
+      this.serviceId = Number(this.$route.query.serviceId);
       this.getItem();
       this.getUserService();
     },
     components: {
       StatChart
     },
-    created() {
-      this.serviceId = this.$route.query.serviceId;
-    }
   };
 </script>
 <style>

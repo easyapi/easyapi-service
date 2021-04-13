@@ -21,8 +21,10 @@ export default {
       HighCharts.chart(this.id, this.option);
     }
   },
-  mounted() {
-    HighCharts.chart(this.id, this.option);
-  }
+  methods: {
+    getHighCharts(){
+      HighCharts.chart(this.id, this.option);
+    }
+  },
 };
 </script>
