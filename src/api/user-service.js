@@ -1,4 +1,3 @@
-import { serviceUrl } from "./api";
 
 import axios from "../utils/request";
 
@@ -8,7 +7,7 @@ import axios from "../utils/request";
  **
  * @see https://www.easyai.com
  */
-export const getUserServiceList = (params) => axios.get(`${serviceUrl}/console/user/services`, { params: params });
+export const getUserServiceList = (params) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/user/services`, { params: params });
 
 
 /**
@@ -16,7 +15,7 @@ export const getUserServiceList = (params) => axios.get(`${serviceUrl}/console/u
  **
  * @see https://www.easyai.com
  */
-export const getUnJoinUserList = (serviceId) => axios.get(`${serviceUrl}/console/service/${serviceId}/unJoinUsers`, { params: serviceId });
+export const getUnJoinUserList = (serviceId) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/service/${serviceId}/unJoinUsers`, { params: serviceId });
 
 
 /**
@@ -24,7 +23,7 @@ export const getUnJoinUserList = (serviceId) => axios.get(`${serviceUrl}/console
  **
  * @see https://www.easyai.com
  */
-export const getServiceUserList = (serviceId, params) => axios.get(`${serviceUrl}/console/service/${serviceId}/users`, { params: params });
+export const getServiceUserList = (serviceId, params) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/service/${serviceId}/users`, { params: params });
 
 
 /**
@@ -32,7 +31,7 @@ export const getServiceUserList = (serviceId, params) => axios.get(`${serviceUrl
  **
  * @see https://www.easyai.com
  */
-export const createUserService = (data) => axios.post(`${serviceUrl}/console/user-service`, data);
+export const createUserService = (data) => axios.post(`${process.env.VUE_APP_SERVICE_API}/console/user-service`, data);
 
 
 /**
@@ -40,4 +39,4 @@ export const createUserService = (data) => axios.post(`${serviceUrl}/console/use
  **
  * @see https://www.easyai.com
  */
-export const deleteUserService = (id) => axios.delete(`${serviceUrl}/console/user-service/${id}`, { params: id });
+export const deleteUserService = (id) => axios.delete(`${process.env.VUE_APP_SERVICE_API}/console/user-service/${id}`, { params: id });

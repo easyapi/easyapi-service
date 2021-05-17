@@ -1,4 +1,3 @@
-import { serviceUrl } from "./api";
 
 import axios from "../utils/request";
 
@@ -8,10 +7,10 @@ import axios from "../utils/request";
  **
  * @see https://www.easyai.com
  */
-export const getTeamService = (id) => axios.get(`${serviceUrl}/console/team-service/${id}`);
+export const getTeamService = (id) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/team-service/${id}`);
 /**
  * 充值应用KEY和密钥
  **
  * @see https://www.easyai.com
  */
-export const resetKey = (teamServiceId) => axios.put(`${serviceUrl}/console/team-service/${teamServiceId}/reset-key`);
+export const resetKey = (teamServiceId) => axios.put(`${process.env.VUE_APP_SERVICE_API}/console/team-service/${teamServiceId}/reset-key`);

@@ -1,7 +1,3 @@
-export const serviceUrl = "https://api.easyapi.com";
-// export const serviceUrl = "http://localhost:9898";
-
-export const accountUrl = "https://account-api.easyapi.com";
 
 import axios from "../utils/request";
 
@@ -10,14 +6,14 @@ import axios from "../utils/request";
  **
  * @see https://www.easyai.com
  */
-export const getBalanceRemind = (serviceId) => axios.get(`${serviceUrl}/console/balanceRemind/team/${serviceId}`);
+export const getBalanceRemind = (serviceId) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/balanceRemind/team/${serviceId}`);
 
 /**
  * 获取余额提醒列表
  **
  * @see https://www.easyai.com
  */
-export const getBalanceRemindList = (params) => axios.get(`${serviceUrl}/console/balanceRemind`, { params: params });
+export const getBalanceRemindList = (params) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/balanceRemind`, { params: params });
 
 
 /**
@@ -25,11 +21,11 @@ export const getBalanceRemindList = (params) => axios.get(`${serviceUrl}/console
  **
  * @see https://www.easyai.com
  */
-export const updateBalanceRemind = (data) => axios.put(`${serviceUrl}/console/balance-remind`, data);
+export const updateBalanceRemind = (data) => axios.put(`${process.env.VUE_APP_SERVICE_API}/console/balance-remind`, data);
 
 /**
  * 获取每日统计
  **
  * @see https://www.easyai.com
  */
-export const getServiceEveryday = (params) => axios.get(`${serviceUrl}/console/service-everydays`, { params: params });
+export const getServiceEveryday = (params) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/service-everydays`, { params: params });

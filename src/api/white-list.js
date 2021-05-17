@@ -1,4 +1,3 @@
-import { serviceUrl } from "./api";
 
 import axios from "../utils/request";
 
@@ -7,11 +6,11 @@ import axios from "../utils/request";
  **
  * @see https://www.easyai.com
  */
-export const getWhiteList = () => axios.get(`${serviceUrl}/console/whiteList/check`);
+export const getWhiteList = () => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/whiteList/check`);
 
 /**
  * 修改白名单设置
  **
  * @see https://www.easyai.com
  */
-export const updateWhiteList = (data) => axios.put(`${serviceUrl}/console/whiteList`, data);
+export const updateWhiteList = (data) => axios.put(`${process.env.VUE_APP_SERVICE_API}/console/whiteList`, data);
