@@ -1,5 +1,5 @@
 
-import axaios from "../utils/request";
+import axios from "../utils/request";
 
 
 /**
