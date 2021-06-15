@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 // 添加请求拦截器
 axios.interceptors.request.use(
   function(config) {
-    if (config.url.indexOf("/page/team") == -1) {
+    if (config.url.indexOf("/page/team") === -1) {
       if (!Cookies.get("authenticationToken")) {
         location.href = "https://account.easyapi.com/login?from=https://service.easyapi.com"; // 如果没有authenticationToken存在
       }
