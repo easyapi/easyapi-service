@@ -10,7 +10,7 @@ axios.interceptors.request.use(
         location.href = "https://account.easyapi.com/login?from=https://service.easyapi.com"; // 如果没有authenticationToken存在
       }
     }
-    config.headers.authorization = "Bearer " + Cookies.get("authenticationToken");
+    config.headers.authorization = "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6aGFuZzIwMDg0QDEyNi5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTiIsImV4cCI6MTYyNjM5NjEwNX0.wC1hME-yZgJz19C-hKa2dzMK7yEScobEhgH_VaFB8rym2d3sdDI860AwhPZjEMRmVWPug-POUQ5nW_8xZA-c9A";
     return config;
   },
   error => {

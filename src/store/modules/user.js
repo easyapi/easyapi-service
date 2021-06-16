@@ -62,19 +62,20 @@ const user = {
      */
     getUserInfo({ commit }) {
       getAccount().then(res => {
-        commit("SET_ACCOUNT_INFO", res.data);
-        commit("SET_USER_ID", res.data.id);
-        commit("SET_USERNAME", res.data.username);
-        commit("SET_NICKNAME", res.data.nickname);
-        commit("SET_PHOTO", res.data.photo);
-        commit("SET_MOBILE", res.data.mobile);
-        commit("SET_EMAIL", res.data.email);
-        if (res.data.team) {
-          commit("SET_TEAM", res.data.team);
-          commit("SET_TEAM_NAME", res.data.team.name);
-          commit("SET_TEAM_IMG", res.data.team.img);
+        let user = res.data.content;
+        commit("SET_ACCOUNT_INFO", user);
+        commit("SET_USER_ID", user.id);
+        commit("SET_USERNAME", user.username);
+        commit("SET_NICKNAME", user.nickname);
+        commit("SET_PHOTO", user.photo);
+        commit("SET_MOBILE", user.mobile);
+        commit("SET_EMAIL", user.email);
+        if (user.team) {
+          commit("SET_TEAM", user.team);
+          commit("SET_TEAM_NAME", user.team.name);
+          commit("SET_TEAM_IMG", user.team.img);
         }
-        commit("SET_USER_TEAM", res.data.userTeam);
+        commit("SET_USER_TEAM", user.userTeam);
       }).catch(error => {
       });
     }
