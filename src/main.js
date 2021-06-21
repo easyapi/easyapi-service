@@ -6,7 +6,7 @@ import ViewUI from "view-design";
 
 import "view-design/dist/styles/iview.css";
 import "./assets/iconfont/iconfont.css";
-
+import "./assets/iconfont/icon-arrow.css";
 Vue.use(ViewUI);
 
 Vue.config.productionTip = false;
@@ -14,5 +14,5 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

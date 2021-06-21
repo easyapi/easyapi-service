@@ -90,7 +90,7 @@ export default {
     position: absolute;
     padding: 0 20px;
     top: 50px;
-    right: 0;
+    left: 80px;
     background-color: #ffffff;
     box-shadow: 0px 1px 3px #ddd;
     border: 1px solid #eee;
@@ -104,6 +104,10 @@ export default {
 
     &.active {
       display: block;
+    }
+
+    .lrPading-20{
+      padding 0px 20px
     }
 
     .current-team-name {
@@ -123,7 +127,7 @@ export default {
     .current-team-content {
       border-bottom: 1px solid #eaeaea;
       height: 110px;
-      padding: 10px 0;
+      padding: 10px;
       display: flex;
 
       .teams-img {
@@ -150,6 +154,7 @@ export default {
         .team-btn {
           height: 50px;
           line-height: 50px;
+          margin-top: 10px;
 
           .ea-btn {
             padding: 6px 15px;
@@ -157,7 +162,7 @@ export default {
             color: #333;
             border-radius: 5px;
             box-sizing: content-box;
-            margin-right: 5px;
+            margin-right: 10px;
             font-weight: normal;
             font-size: 14px;
           }
@@ -167,13 +172,13 @@ export default {
 
     .change-team-box {
       // border-bottom: 1px solid #eaeaea;
-      padding-left 20px;
+      // padding-left 20px;
 
       & > h2 {
         height: 50px;
         line-height: 50px;
         font-weight: bold;
-        font-size 20px
+        font-size 16px
       }
 
       .ea-team-list-box {

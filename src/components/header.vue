@@ -6,16 +6,16 @@
           <img src="https://qiniu.easyapi.com/icon.png" alt />
         </div>
       </a>
+      <a id="showTeamInfo" v-if="team" class="ea-header-item">
+        {{ team.name }}
+        <i v-if="showTeamInfo" class="team-icon icon-arrow-top iconfont"></i>
+        <i v-else class="team-icon icon-xiangxiajiantou iconfont"></i>
+      </a>
+      <EaTeam :class="{ active: showTeamInfo }"></EaTeam>
       <router-link class="ea-header-item" to="/">API服务中心</router-link>
     </div>
     <div class="h-right clearfix">
       <div class="fr menu-box">
-        <div class="current-team-box">
-          <a id="showTeamInfo" :class="{ active: showTeamInfo }">
-            <span class="team-icon"></span>
-          </a>
-          <EaTeam :class="{ active: showTeamInfo }"></EaTeam>
-        </div>
         <div class="user-avatar">
           <a>
             <img id="showPersonage" :src="photo" alt />
@@ -71,7 +71,7 @@ export default {
       (e) => {
         if (
           e.target.id === "showTeamInfo" ||
-          e.target.className === "team-icon"
+          e.target.classList[0] === "team-icon"
         ) {
           this.isActive = false;
           this.showTeamInfo = !this.showTeamInfo;
