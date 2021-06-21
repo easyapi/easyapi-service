@@ -116,7 +116,7 @@
         let index = this.checkAllGroup.findIndex((item) => {
           return item === id;
         });
-        if (index != -1) {
+        if (index !== -1) {
           this.checkAllGroup.splice(index, 1);
         } else {
           this.checkAllGroup.push(id);

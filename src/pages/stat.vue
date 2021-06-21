@@ -11,10 +11,10 @@
         @on-change="switchingService()"
       >
         <Option
-          v-for="(informations, informationsIndex) in teamInformation"
-          :value="informations.value"
-          :key="informationsIndex"
-        >{{ informations.label }}
+          v-for="(service, serviceIndex) in serviceList"
+          :value="service.value"
+          :key="serviceIndex"
+        >{{ service.label }}
         </Option
         >
       </Select>
@@ -64,13 +64,13 @@
     data() {
       return {
         serviceId: "",
-        teamInformation: "",
+        serviceList: "",
         Switching: "最近7天",
         timeAndDate: "",
         startDay: "", //开始时间
         endDay: "", //截止时间
         dayArr: [],
-       
+
         item: 7,
         option: {},
         data: [
@@ -137,7 +137,7 @@
         this.startDay = this.dayArr[0];
         let index = this.dayArr.length - 1;
         this.endDay = this.dayArr[index];
-        this.timeAndDate = [this.dayArr[0].split(" ")[0],this.dayArr[index].split(" ")[0]]
+        this.timeAndDate = [this.dayArr[0].split(" ")[0], this.dayArr[index].split(" ")[0]];
         this.getTimeAndDate();
       },
       //选择时间
@@ -156,15 +156,15 @@
           size: 500
         };
         getServiceEveryday(params).then(res => {
-          if(res.data.code === 1){
-            let data = []
-            let timeArr = []
-            for(let item of res.data.content){
-              timeArr.push(item.day.split(" ")[0])
-              data.push(item.count)
+          if (res.data.code === 1) {
+            let data = [];
+            let timeArr = [];
+            for (let item of res.data.content) {
+              timeArr.push(item.day.split(" ")[0]);
+              data.push(item.count);
             }
-            this.data[0].data = data
-            this.other.xAxis.categories = timeArr
+            this.data[0].data = data;
+            this.other.xAxis.categories = timeArr;
             chart.other.series = chart.data; //数据
             chart.option = chart.other;
             this.$refs.child.getHighCharts();
@@ -176,18 +176,19 @@
       //我的服务
       getUserService() {
         let params = {
-          serviceCategory: this.category,
+          serviceCategory: this.serviceCategory,
           size: 50
         };
         getUserServiceList(params).then(res => {
-          let data = []
-          for(let item of res.data.content){
-            data.push({
-              value: item.service.serviceId,
-              label: item.service.name
-            })
+          if (res.data.code === 1) {
+            this.serviceList = [];
+            for (let item of res.data.content) {
+              this.serviceList.push({
+                value: item.service.serviceId,
+                label: item.service.name
+              });
+            }
           }
-          this.teamInformation = data;
         }).catch(error => {
           console.log(error);
         });
@@ -207,7 +208,7 @@
     },
     components: {
       StatChart
-    },
+    }
   };
 </script>
 <style>

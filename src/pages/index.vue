@@ -8,27 +8,27 @@
         style="width:100%;height:50px;line-height:30px;margin-top:30px;border-bottom: 1px solid#e2e2e2;margin-bottom:20px;"
       >
         <span
-          :class="{ colour: category === '' }"
+          :class="{ colour: serviceCategory === '' }"
           @click="switchService('')"
           style="font-size: 18px;color: #999999;cursor: pointer"
         >全部</span>
         <span
-          :class="{ colour: category === 1 }"
+          :class="{ colour: serviceCategory === 1 }"
           @click="switchService(1)"
           style="font-size: 18px;color: #999999;margin-left:45px;cursor: pointer"
         >接口服务</span>
         <span
-          :class="{ colour: category === 2 }"
+          :class="{ colour: serviceCategory === 2 }"
           @click="switchService(2)"
           style="font-size: 18px;color: #999999;margin-left:45px;cursor: pointer"
         >场景服务</span>
         <span
-          :class="{ colour: category === 3 }"
+          :class="{ colour: serviceCategory === 3 }"
           @click="switchService(3)"
           style="font-size: 18px;color: #999999;margin-left:45px;cursor: pointer"
         >数据服务</span>
       </div>
-      <service-item :category="category"></service-item>
+      <service-item :serviceCategory="serviceCategory"></service-item>
       <div class="configure">
         <p class="configure_p">
           <strong>配置</strong>
@@ -54,7 +54,7 @@
     components: { ServiceItem },
     data() {
       return {
-        category: ""
+        serviceCategory: ""
       };
     },
     methods: {
@@ -67,10 +67,9 @@
 
       /**
        * 切换服务列表
-       * @param category
        */
-      switchService(category) {
-        this.category = category;
+      switchService(serviceCategory) {
+        this.serviceCategory = serviceCategory;
       }
     },
     mounted() {

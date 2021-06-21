@@ -187,18 +187,22 @@
           this.$Message.error(error.response.data.message);
         });
       },
-      //获取服务的成员列表
+      /**
+       * 获取服务的成员列表
+       */
       getMemberList() {
         let params = {
           size: 100
         };
         getServiceUserList(this.serviceId, params).then((res) => {
-          this.member = res.data.content.filter((item) => {
-            return item.type !== "创建人";
-          });
-          this.defaultMemberImg = res.data.content[0].user.photo;
-          this.defaultMemberNickname = res.data.content[0].user.nickname;
-          this.defaultMemberType = res.data.content[0].type;
+          if (res.data.code === 1) {
+            this.member = res.data.content.filter((item) => {
+              return item.type !== "创建人";
+            });
+            this.defaultMemberImg = res.data.content[0].user.photo;
+            this.defaultMemberNickname = res.data.content[0].user.nickname;
+            this.defaultMemberType = res.data.content[0].type;
+          }
         }).catch((error) => {
           this.$Message.error(error.response.data.message);
         });
@@ -216,8 +220,6 @@
     created() {
       this.getMemberList();
       this.membersNotJoined();
-    },
-    mounted() {
     }
   };
 </script>

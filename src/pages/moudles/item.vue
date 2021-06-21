@@ -277,10 +277,9 @@
   import SettingBalance from "../setting/balance";
   import SettingSecret from "../setting/secret";
   import { getUserServiceList } from "../../api/user-service";
-  import { getTeamService } from "../../api/team-service";
 
   export default {
-    props: ["category"],
+    props: ["serviceCategory"],
     components: { SettingMember, SettingBalance, SettingSecret },
     data() {
       return {
@@ -357,21 +356,26 @@
           size: 50
         };
         getUserServiceList(params).then((res) => {
-          res.data.content.map((item) => {
-            let timestampLogin = new Date(item.teamService.endTime).getTime();
-            item.teamService.endTime = timestampLogin;
-            if (item.teamService.endTime > this.currentTime) {
-              item.teamService.remainDay =
-                Math.floor(
-                  (item.teamService.endTime - this.currentTime) /
-                  (1000 * 3600 * 24)
-                ) + 1;
-            } else if (item.teamService.endTime <= this.currentTime) {
-              item.teamService.remainDay = 0;
-            }
-          });
-          this.serviceList = res.data.content;
-          this.name = this.serviceList[0].team.name;
+          if (res.data.code === 1) {
+            res.data.content.map((item) => {
+              let timestampLogin = new Date(item.teamService.endTime).getTime();
+              item.teamService.endTime = timestampLogin;
+              if (item.teamService.endTime > this.currentTime) {
+                item.teamService.remainDay =
+                  Math.floor(
+                    (item.teamService.endTime - this.currentTime) /
+                    (1000 * 3600 * 24)
+                  ) + 1;
+              } else if (item.teamService.endTime <= this.currentTime) {
+                item.teamService.remainDay = 0;
+              }
+            });
+            this.serviceList = res.data.content;
+            this.name = this.serviceList[0].team.name;
+          }
+          else if (res.data.code === 0) {
+            this.serviceList = [];
+          }
         }).catch((error) => {
           console.log(error);
         });
@@ -387,7 +391,7 @@
       this.getUserServiceList();
     },
     watch: {
-      category(serviceCategory) {
+      serviceCategory(serviceCategory) {
         this.getUserServiceList(serviceCategory);
       }
     }
