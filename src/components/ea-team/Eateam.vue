@@ -1,11 +1,5 @@
 <template>
   <div class="current-team-info">
-    <!-- <div class="current-team-name lrPading-20">
-      <a href="https://doc.easyapi.com/" class="ea-link">文档</a>
-      <a href="https://monitor.easyapi.com/" class="ea-link">监控</a>
-      <a href="https://gateway.easyapi.com/" class="ea-link">网关</a>
-      <a href="https://service.easyapi.com/" class="ea-link">服务</a>
-    </div> -->
     <div class="clear current-team-content lrPading-20">
       <img
         class="lf teams-img"
