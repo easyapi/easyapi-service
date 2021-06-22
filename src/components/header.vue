@@ -6,13 +6,55 @@
           <img src="https://qiniu.easyapi.com/icon.png" alt />
         </div>
       </a>
-      <a id="showTeamInfo" v-if="team" class="ea-header-item">
+      <a
+        @click.stop="showTeamInfo = !showTeamInfo"
+        v-if="team"
+        class="ea-header-item"
+      >
         {{ team.name }}
-        <i v-if="showTeamInfo" class="team-icon icon-arrow-top iconfont"></i>
-        <i v-else class="team-icon icon-xiangxiajiantou iconfont"></i>
+        <i v-if="showTeamInfo" class="team-icon icon-arrow-top iconfontt"></i>
+        <i v-else class="team-icon icon-xiangxiajiantou iconfontt"></i>
       </a>
-      <EaTeam :class="{ active: showTeamInfo }"></EaTeam>
-      <router-link class="ea-header-item" to="/">API服务中心</router-link>
+      <div ref="showTeamInfo">
+        <EaTeam :class="{ active: showTeamInfo }"></EaTeam>
+      </div>
+      <a class="ea-header-item">
+        <router-link to="/" class="txt">API服务中心</router-link>
+        <i
+          class="icon-dim-xiajiantou-small-copy iconfontt icon-down"
+          @click.stop="showModal = !showModal"
+        ></i>
+      </a>
+      <div ref="showModal">
+        <div class="modal" :class="{ active: showModal }">
+          <div class="modal-content">
+            <div>
+              <a href="https://doc.easyapi.com/" class="ea-link">
+                <img src="../assets/images/ip.png" alt="" />
+                <p>API文档</p>
+              </a>
+            </div>
+            <div>
+              <a href="https://monitor.easyapi.com/" class="ea-link">
+                <img src="../assets/images/ip.png" alt="" />
+                <p>API监控</p>
+              </a>
+            </div>
+            <div>
+              <a href="https://gateway.easyapi.com/" class="ea-link">
+                <img src="../assets/images/ip.png" alt="" />
+                <p>API网关</p>
+              </a>
+            </div>
+            <div class="last">
+              <a href="https://service.easyapi.com/" class="ea-link">
+                <img src="../assets/images/ip.png" alt="" />
+                <p>API服务</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="h-right clearfix">
       <div class="fr menu-box">
@@ -50,6 +92,7 @@ export default {
     return {
       isActive: false,
       showTeamInfo: false,
+      showModal: false,
       teamData: {
         photo: "--",
         name: "--",
@@ -64,22 +107,30 @@ export default {
   beforeCreate() {
     this.$store.dispatch("getUserInfo");
   },
+  mounted() {
+    let that = this;
+    document.addEventListener("click", function (e) {
+      if (!!that.$refs.showTeamInfo.contains(e.target)) {
+        that.showTeamInfo = true;
+      } else {
+        that.showTeamInfo = false;
+      }
+      if (!!that.$refs.showModal.contains(e.target)) {
+        that.showModal = true;
+      } else {
+        that.showModal = false;
+      }
+    });
+  },
+
   created: function () {
     let body = document.querySelector("body");
     body.addEventListener(
       "click",
       (e) => {
-        if (
-          e.target.id === "showTeamInfo" ||
-          e.target.classList[0] === "team-icon"
-        ) {
-          this.isActive = false;
-          this.showTeamInfo = !this.showTeamInfo;
-        } else if (e.target.id === "showPersonage") {
+        if (e.target.id === "showPersonage") {
           this.isActive = !this.isActive;
-          this.showTeamInfo = false;
         } else {
-          this.showTeamInfo = false;
           this.isActive = false;
         }
       },
@@ -113,6 +164,47 @@ export default {
     width: 70%;
   }
 
+  .modal{
+    position:absolute;
+    top:50px;
+    left 205px;
+    padding 20px;
+    background:#fff;
+    z-index:1000;
+    border-radius:5px;
+    box-shadow: 0 2px 12px 0 rgba(0 0 0,0.1);
+    display none
+    &.active {
+      display: block;
+    }
+    .modal-content{
+      display flex
+      align-items center
+      justify-content center
+      div{
+        line-height 0
+        margin-right 30px
+        text-align center
+      }
+      .last{
+        margin-right 0
+      }
+      a{
+        color #000;
+        font-weight normal
+        img{
+          width 40px;
+          height 40px;
+          border-radius 50%
+          vertical-align top
+        }
+        p{
+          margin-top 15px
+          font-size 12px
+        }
+      }
+    }
+  }
   .ea-header-item {
     position: relative;
     float: left;
@@ -121,6 +213,18 @@ export default {
     color: #fff;
     border-right: 1px solid darken(#1ac1d6, 5%);
     font-size: 14px;
+
+    .txt{
+      font-size: 14px;
+      color :#fff;
+    }
+    .icon-down{
+      margin-left 5px;
+      &:hover{
+        background : #fff;
+        color:#1ac1d6;
+      }
+    }
   }
 
   .logo {
