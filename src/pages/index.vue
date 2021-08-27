@@ -35,7 +35,7 @@
         </p>
         <div class="configure_box" @click="jumpPage">
           <span class="configure_box_icon">
-            <img src="../assets/images/ip.png" alt/>
+            <img src="https://qiniu.easyapi.com/market/ip.png" alt/>
           </span>
           <strong
             style="font-size: 16px;color: #333333;text-align: center;display: block;height: 40px"
