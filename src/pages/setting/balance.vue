@@ -134,6 +134,7 @@ export default {
     "name",
     "teamServiceId",
     "openRenewDialog",
+    "dialog",
   ],
   data() {
     return {
@@ -142,6 +143,15 @@ export default {
       checkbox: [],
       tipsMember: [],
     };
+  },
+  watch: {
+    dialog(val) {
+      if (val) {
+        this.getBalanceRemind();
+        this.getBalanceRemindList();
+        this.getServiceUserList();
+      }
+    },
   },
   methods: {
     //余额提醒上限

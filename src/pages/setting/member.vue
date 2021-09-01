@@ -29,7 +29,7 @@
         <span
           class="lpha"
           @click="deleteMember(staff.userServiceId, staff.user.nickname)"
-        >X</span
+          >X</span
         >
         <img
           :src="staff.user.photo"
@@ -66,7 +66,7 @@
             line-height: 70px;
             margin-left: 10px;
           "
-        >添加成员</span
+          >添加成员</span
         >
       </span>
     </div>
@@ -104,13 +104,7 @@
               width="360"
               class="dialogue"
             >
-              <p
-                style="
-                  text-align: center;
-                  color: #333;
-                  font-size: 16px;
-                "
-              >
+              <p style="text-align: center; color: #333; font-size: 16px">
                 确定添加成员{{ nickname }}吗?
               </p>
             </Modal>
@@ -122,79 +116,92 @@
 </template>
 
 <script>
-  import {
-    createUserService,
-    getUnJoinUserList,
-    getServiceUserList,
-    deleteUserService
-  } from "../../api/user-service";
+import {
+  createUserService,
+  getUnJoinUserList,
+  getServiceUserList,
+  deleteUserService,
+} from "../../api/user-service";
 
-  export default {
-    name: "SettingMember",
-    props: ["serviceId", "teamServiceId"],
-    data() {
-      return {
-        show: false,
-        frame: false,
-        nickname: "",
-        memberId: "",
-        deleteModel: false,
-        notAdded: [],
-        member: [],
-        defaultMemberImg: "",
-        defaultMemberNickname: "",
-        defaultMemberType: ""
-      };
+export default {
+  name: "SettingMember",
+  props: ["serviceId", "teamServiceId", "dialog"],
+  data() {
+    return {
+      show: false,
+      frame: false,
+      nickname: "",
+      memberId: "",
+      deleteModel: false,
+      notAdded: [],
+      member: [],
+      defaultMemberImg: "",
+      defaultMemberNickname: "",
+      defaultMemberType: "",
+    };
+  },
+  watch: {
+    dialog(val) {
+      if (val) {
+        this.getMemberList();
+        this.membersNotJoined();
+      }
     },
-    methods: {
-      //显示未添加成员
-      displayAdd() {
-        this.show = true;
-      },
-      //添加成员
-      projectile(nickname, id) {
-        this.frame = true;
-        this.nickname = nickname;
-        this.userId = id;
-      },
-      //添加成员
-      Sure() {
-        let data = {
-          userId: this.userId,
-          serviceId: this.serviceId,
-          teamServiceId: this.teamServiceId
-        };
-        createUserService(data).then((res) => {
+  },
+  methods: {
+    //显示未添加成员
+    displayAdd() {
+      this.show = true;
+    },
+    //添加成员
+    projectile(nickname, id) {
+      this.frame = true;
+      this.nickname = nickname;
+      this.userId = id;
+    },
+    //添加成员
+    Sure() {
+      let data = {
+        userId: this.userId,
+        serviceId: this.serviceId,
+        teamServiceId: this.teamServiceId,
+      };
+      createUserService(data)
+        .then((res) => {
           this.$Message.success(res.data.message);
           this.getMemberList();
           this.membersNotJoined();
-        }).catch((error) => {
+        })
+        .catch((error) => {
           this.$Message.error(error.response.data.message);
         });
-      },
-      //删除成员
-      deleteMember(id, name) {
-        this.deleteModel = true;
-        this.memberId = id;
-        this.nickname = name;
-      },
-      prompt() {
-        deleteUserService(this.memberId).then((res) => {
+    },
+    //删除成员
+    deleteMember(id, name) {
+      this.deleteModel = true;
+      this.memberId = id;
+      this.nickname = name;
+    },
+    prompt() {
+      deleteUserService(this.memberId)
+        .then((res) => {
           this.$Message.success(res.data.message);
           this.getMemberList();
           this.membersNotJoined();
-        }).catch((error) => {
+        })
+        .catch((error) => {
           this.$Message.error(error.response.data.message);
         });
-      },
-      /**
-       * 获取服务的成员列表
-       */
-      getMemberList() {
-        let params = {
-          size: 100
-        };
-        getServiceUserList(this.serviceId, params).then((res) => {
+    },
+    /**
+     * 获取服务的成员列表
+     */
+    getMemberList() {
+      let params = {
+        size: 100,
+      };
+      getServiceUserList(this.serviceId, params)
+        .then((res) => {
           if (res.data.code === 1) {
             this.member = res.data.content.filter((item) => {
               return item.type !== "创建人";
@@ -203,107 +210,110 @@
             this.defaultMemberNickname = res.data.content[0].user.nickname;
             this.defaultMemberType = res.data.content[0].type;
           }
-        }).catch((error) => {
+        })
+        .catch((error) => {
           this.$Message.error(error.response.data.message);
         });
-      },
-      //未加入服务的成员列表
-      membersNotJoined() {
-        getUnJoinUserList(this.serviceId).then((res) => {
+    },
+    //未加入服务的成员列表
+    membersNotJoined() {
+      getUnJoinUserList(this.serviceId)
+        .then((res) => {
           this.notAdded = res.data.content;
           this.code = res.data.code;
-        }).catch((error) => {
+        })
+        .catch((error) => {
           this.$Message.error(error.response.data.message);
         });
-      }
     },
-    created() {
-      this.getMemberList();
-      this.membersNotJoined();
-    }
-  };
+  },
+  created() {
+    this.getMemberList();
+    this.membersNotJoined();
+  },
+};
 </script>
 <style lang="stylus">
-  .staff {
-    width: 100%;
-    height: auto;
-    overflow: hidden;
-  }
+.staff {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
 
-  .staff_member {
-    width: 156px;
-    height: 74px;
-    background-color: #ffffff;
-    border-radius: 4px;
-    display: flex;
-    float: left;
-    margin-top: 20px;
-    margin-left: 17px;
-    cursor: pointer;
-    margin-bottom: 5px;
-  }
+.staff_member {
+  width: 156px;
+  height: 74px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  float: left;
+  margin-top: 20px;
+  margin-left: 17px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
 
-  .staff_member ul {
-    width: 42px;
-    height: 100%;
-    margin-left: 10px;
-    list-style: none;
-    font-size: 14px;
-    color: #333;
-  }
+.staff_member ul {
+  width: 42px;
+  height: 100%;
+  margin-left: 10px;
+  list-style: none;
+  font-size: 14px;
+  color: #333;
+}
 
-  .fq:hover .lpha {
-    display: block;
-  }
+.fq:hover .lpha {
+  display: block;
+}
 
-  .fq:hover {
-    width: 156px;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.11);
-    border-radius: 4px;
-  }
+.fq:hover {
+  width: 156px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.11);
+  border-radius: 4px;
+}
 
-  .addMembers .ivu-modal-body {
-    height: 100px;
-    margin: 0px;
-    padding: 0px;
-  }
+.addMembers .ivu-modal-body {
+  height: 100px;
+  margin: 0px;
+  padding: 0px;
+}
 
-  .addMembers {
-    width: 100%;
-    height: auto;
-  }
+.addMembers {
+  width: 100%;
+  height: auto;
+}
 
-  .lpha {
-    color: #7e8e9f;
-    font-size: 15px;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 0px;
-    top: 3px;
-    display: none;
-  }
+.lpha {
+  color: #7e8e9f;
+  font-size: 15px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0px;
+  top: 3px;
+  display: none;
+}
 
-  .addTO {
-    width: 169px;
-    height: 73px;
-    background-color: #ffffff;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-left: 17px;
-    display: inline-block;
-  }
+.addTO {
+  width: 169px;
+  height: 73px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 17px;
+  display: inline-block;
+}
 
-  .dialogue .ivu-modal-mask {
-    /* background-color:transparent; */
-    background-color: rgba(55, 55, 55, 0.1);
-    /* background-color:#000; */
-    /* opacity:0.1; */
-  }
+.dialogue .ivu-modal-mask {
+  /* background-color:transparent; */
+  background-color: rgba(55, 55, 55, 0.1);
+  /* background-color:#000; */
+  /* opacity:0.1; */
+}
 
-  .dialogue .ivu-modal-content {
-    box-shadow: none;
-  }
+.dialogue .ivu-modal-content {
+  box-shadow: none;
+}
 </style>

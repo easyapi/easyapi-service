@@ -256,6 +256,7 @@
           <setting-secret
             :teamServiceId="teamServiceId"
             :name="name"
+            :dialog="dialog"
           ></setting-secret>
         </div>
         <!--成员管理-->
@@ -263,6 +264,7 @@
           <setting-member
             :serviceId="serviceId"
             :teamServiceId="teamServiceId"
+            :dialog="dialog"
           ></setting-member>
         </div>
         <!--余额提醒-->
@@ -279,6 +281,7 @@
             :name="name"
             :teamServiceId="teamServiceId"
             :openRenewDialog="openRenewDialog"
+            :dialog="dialog"
           ></setting-balance>
         </div>
       </div>
@@ -393,6 +396,7 @@ export default {
             this.name = this.serviceList[0].team.name;
           } else if (res.data.code === 0) {
             this.serviceList = [];
+            this.establish = true;
           }
         })
         .catch((error) => {
