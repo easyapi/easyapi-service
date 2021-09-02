@@ -92,12 +92,12 @@
       title="温馨提示"
       :closable="false"
       v-model="ifCreateSuccess"
-      @on-ok="sure"
       :mask-closable="false"
-      cancel-text=""
-      ok-text="已创建成功"
     >
       <p>是否成功创建团队？</p>
+      <div slot="footer">
+        <Button type="primary" @click="sure">已创建成功</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -130,19 +130,27 @@ export default {
       this.serviceCategory = serviceCategory;
     },
 
+    /**
+     * 跳转创建团队
+     */
     goto() {
       window.open("https://team.easyapi.com/new", "_blank");
       this.ifCreateSuccess = true;
     },
+
     sure() {
       location.reload();
     },
   },
   mounted() {
     document.title = "服务中心 - EasyAPI";
-    if (this.teamList.length == 0) {
-      this.establish = true;
-    }
+  },
+  watch: {
+    "$store.getters.teamList"(val) {
+      if (val.length == 0) {
+        this.establish = true;
+      }
+    },
   },
   computed: {
     ...mapGetters(["photo", "team", "teamName", "teamImg", "teamList"]),

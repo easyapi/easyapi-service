@@ -5,7 +5,7 @@ const team = {
     currentTeam: "",
     teamName: "",
     teamImg: "https://qiniu.easyapi.com/ea-team/default.png",
-    teamList: []
+    teamList: null,
   },
 
   mutations: {
@@ -20,32 +20,40 @@ const team = {
     },
     SET_TEAM_LIST: (state, teamList) => {
       state.teamList = teamList;
-    }
+    },
   },
 
   actions: {
     getTeamList({ commit }) {
-      getUserTeamList().then(res => {
-        commit("SET_TEAM_LIST", res.data.content);
-      }).catch(error => {
-        console.log(error);
-      });
+      getUserTeamList()
+        .then((res) => {
+          if (res.data.code == 1) {
+            commit("SET_TEAM_LIST", res.data.content);
+          } else {
+            commit("SET_TEAM_LIST", []);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     /**
      * 切换团队
      */
     switchoverTeam({ dispatch, commit, state }, teamId) {
-      changeTeam(teamId).then(res => {
-        if (res.data.code === 1) {
-          dispatch("getUserInfo");
-          location.hash = "";
-          location.reload();
-        }
-      }).catch(error => {
-        console.log(error);
-      });
-    }
-  }
+      changeTeam(teamId)
+        .then((res) => {
+          if (res.data.code === 1) {
+            dispatch("getUserInfo");
+            location.hash = "";
+            location.reload();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 
 export default team;
