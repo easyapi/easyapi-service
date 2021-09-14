@@ -5,7 +5,7 @@ import axios from "../utils/request";
 /**
  * 获取我的服务
  **
- * @see https://www.easyai.com
+ * @see https://www.easyapi.com
  */
 export const getUserServiceList = (params) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/user/services`, { params: params });
 
@@ -13,7 +13,7 @@ export const getUserServiceList = (params) => axios.get(`${process.env.VUE_APP_S
 /**
  * 获取未加入服务的团队成员列表
  **
- * @see https://www.easyai.com
+ * @see https://www.easyapi.com
  */
 export const getUnJoinUserList = (serviceId) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/service/${serviceId}/unJoinUsers`, { params: serviceId });
 
@@ -21,7 +21,7 @@ export const getUnJoinUserList = (serviceId) => axios.get(`${process.env.VUE_APP
 /**
  * 获取当前团队服务所有的用户列表
  **
- * @see https://www.easyai.com
+ * @see https://www.easyapi.com
  */
 export const getServiceUserList = (serviceId, params) => axios.get(`${process.env.VUE_APP_SERVICE_API}/console/service/${serviceId}/users`, { params: params });
 
@@ -29,7 +29,7 @@ export const getServiceUserList = (serviceId, params) => axios.get(`${process.en
 /**
  * 添加服务成员
  **
- * @see https://www.easyai.com
+ * @see https://www.easyapi.com
  */
 export const createUserService = (data) => axios.post(`${process.env.VUE_APP_SERVICE_API}/console/user-service`, data);
 
@@ -37,6 +37,6 @@ export const createUserService = (data) => axios.post(`${process.env.VUE_APP_SER
 /**
  * 删除服务成员
  **
- * @see https://www.easyai.com
+ * @see https://www.easyapi.com
  */
 export const deleteUserService = (id) => axios.delete(`${process.env.VUE_APP_SERVICE_API}/console/user-service/${id}`, { params: id });

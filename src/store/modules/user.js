@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { getAccount } from "@/api/account";
+import {getAccount} from "@/api/account";
 
 const user = {
   state: {
@@ -60,7 +60,7 @@ const user = {
     /**
      * 获取用户信息
      */
-    getUserInfo({ commit }) {
+    getUserInfo({commit}) {
       getAccount().then(res => {
         let user = res.data.content;
         commit("SET_ACCOUNT_INFO", user);

@@ -2,17 +2,13 @@
   <div>
     <div class="staff">
       <span class="staff_member">
-        <img
-          :src="defaultMemberImg"
-          alt
-          style="
+        <img :src="defaultMemberImg" alt style="
             width: 40px;
             height: 40px;
             border-radius: 25px;
             margin-left: 10px;
             margin-top: 18px;
-          "
-        />
+          "/>
         <ul style="width: 85px; height: 100%; padding-top: 15px">
           <li style="color: #1bc1d6; font-size: 16px">
             {{ defaultMemberNickname }}
@@ -26,22 +22,14 @@
         :key="staffIndex"
         style="position: relative"
       >
-        <span
-          class="lpha"
-          @click="deleteMember(staff.userServiceId, staff.user.nickname)"
-          >X</span
-        >
-        <img
-          :src="staff.user.photo"
-          alt
-          style="
+        <span class="lpha" @click="deleteMember(staff.userServiceId, staff.user.nickname)">X</span>
+        <img :src="staff.user.photo" alt style="
             width: 40px;
             height: 40px;
             border-radius: 25px;
             margin-left: 10px;
             margin-top: 18px;
-          "
-        />
+          "/>
         <ul style="width: 85px; height: 100%; padding-top: 15px">
           <li style="color: #1bc1d6; font-size: 16px">
             {{ staff.user.nickname }}
@@ -55,19 +43,13 @@
         </Modal>
       </span>
       <span class="addTO" @click="displayAdd">
-        <Icon
-          type="ios-add-circle-outline"
-          style="color: #1bc0d6; font-size: 40px; line-height: 70px"
-        />
-        <span
-          style="
+        <Icon type="ios-add-circle-outline" style="color: #1bc0d6; font-size: 40px; line-height: 70px"/>
+        <span style="
             color: #333333;
             font-size: 16px;
             line-height: 70px;
             margin-left: 10px;
-          "
-          >添加成员</span
-        >
+          ">添加成员</span>
       </span>
     </div>
     <div class="addMembers" style="margin-top: 15px" v-if="show">
@@ -81,29 +63,19 @@
           style="position: relative; margin-top: 0px"
         >
           <span v-if="notAdded.code !== 0" class="staff_member">
-            <img
-              :src="people.photo"
-              alt
-              style="
+            <img :src="people.photo" alt style="
                 width: 40px;
                 height: 40px;
                 border-radius: 25px;
                 margin-left: 10px;
                 margin-top: 18px;
-              "
-            />
+              "/>
             <ul style="width: 85px; height: 100%; padding-top: 25px">
               <li style="color: #1bc1d6; font-size: 16px">
                 {{ people.nickname }}
               </li>
             </ul>
-            <Modal
-              v-model="frame"
-              title="提示"
-              @on-ok="Sure"
-              width="360"
-              class="dialogue"
-            >
+            <Modal v-model="frame" title="提示" @on-ok="Sure" width="360" class="dialogue">
               <p style="text-align: center; color: #333; font-size: 16px">
                 确定添加成员{{ nickname }}吗?
               </p>

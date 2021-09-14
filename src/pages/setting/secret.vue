@@ -1,66 +1,29 @@
 <template>
   <div class="secret_key">
-    <Form
-      ref="formValidate"
-      :model="formValidate"
-      :rules="ruleValidate"
-      :label-width="100"
-    >
-      <FormItem
-        label="appKey"
-        prop="appKey"
-        style="margin-top: 20px"
-        class="fk"
-      >
-        <Input
-          placeholder="appKey"
-          v-model="formValidate.appKey"
-          disabled
-          style="width: 300px"
-          id="copyAppKey"
-        />
-        <button
-          type="button"
-          class="copy"
-          :data-clipboard-text="this.formValidate.appKey"
-          @click="copyAppKey"
-        >
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+      <FormItem label="appKey" prop="appKey" style="margin-top: 20px" class="fk">
+        <Input placeholder="appKey" v-model="formValidate.appKey" disabled style="width: 300px" id="copyAppKey"/>
+        <button type="button" class="copy" :data-clipboard-text="this.formValidate.appKey" @click="copyAppKey">
           复制
         </button>
       </FormItem>
       <FormItem label="appSecret" prop="appSecret" class="fk">
-        <Input
-          :type="inputType"
-          v-model="formValidate.appSecret"
-          disabled
-          placeholder="appSecret"
-          style="width: 300px"
-          class="copyContent"
-        />
-        <button
-          type="button"
-          class="copy"
-          :data-clipboard-text="this.formValidate.appSecret"
-          @click="copyAppSecret"
-        >
+        <Input :type="inputType" v-model="formValidate.appSecret" disabled placeholder="appSecret" style="width: 300px"
+               class="copyContent"/>
+        <button type="button" class="copy" :data-clipboard-text="this.formValidate.appSecret" @click="copyAppSecret">
           复制
         </button>
         <span class="display" @click="showInputData">{{ btnContent }}</span>
       </FormItem>
       <FormItem>
         <Button type="info" @click="showResetKey()">更换秘钥</Button>
-        <span
-          style="
+        <span style="
             display: block;
             margin-top: 10px;
             color: #999999;
             font-size: 12px;
-          "
-          >此秘钥仅限于{{ name }}使用</span
-        >
-        <span style="line-height: 0px; color: #999999; font-size: 12px"
-          >出于安全考虑，建议您周期性的更换密钥</span
-        >
+          ">此秘钥仅限于{{ name }}使用</span>
+        <span style="line-height: 0px; color: #999999; font-size: 12px">出于安全考虑，建议您周期性的更换密钥</span>
       </FormItem>
     </Form>
 
@@ -84,7 +47,7 @@
 
 <script>
 import Clipboard from "clipboard";
-import { resetKey, getTeamService } from "../../api/team-service";
+import {resetKey, getTeamService} from "../../api/team-service";
 
 export default {
   name: "SettingSecret",
@@ -93,18 +56,10 @@ export default {
     return {
       ruleValidate: {
         appKey: [
-          {
-            required: true,
-            message: "请输入appKey，且不能为空",
-            trigger: "blur",
-          },
+          {required: true, message: "请输入appKey，且不能为空", trigger: "blur",},
         ],
         appSecret: [
-          {
-            required: true,
-            message: "请输入appSecret，且不能为空",
-            trigger: "blur",
-          },
+          {required: true, message: "请输入appSecret，且不能为空", trigger: "blur",},
         ],
       },
       formValidate: {
@@ -163,25 +118,21 @@ export default {
     },
     //获取秘钥信息
     secretKey() {
-      getTeamService(this.teamServiceId)
-        .then((res) => {
-          this.formValidate.appKey = res.data.appKey;
-          this.formValidate.appSecret = res.data.appSecret;
-        })
-        .catch((error) => {
-          this.$Message.error(error.response.data.message);
-        });
+      getTeamService(this.teamServiceId).then((res) => {
+        this.formValidate.appKey = res.data.appKey;
+        this.formValidate.appSecret = res.data.appSecret;
+      }).catch((error) => {
+        this.$Message.error(error.response.data.message);
+      });
     },
     ok() {
-      resetKey(this.teamServiceId)
-        .then((res) => {
-          this.formValidate.appKey = res.data.content.appKey;
-          this.formValidate.appSecret = res.data.content.appSecret;
-          this.$Message.success(res.data.message);
-        })
-        .catch((error) => {
-          this.$Message.error(error.data.message);
-        });
+      resetKey(this.teamServiceId).then((res) => {
+        this.formValidate.appKey = res.data.content.appKey;
+        this.formValidate.appSecret = res.data.content.appSecret;
+        this.$Message.success(res.data.message);
+      }).catch((error) => {
+        this.$Message.error(error.data.message);
+      });
     },
     cancel() {
       this.resetKeyModal = false;

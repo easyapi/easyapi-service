@@ -15,7 +15,7 @@
             <span slot="close" style="color: #fff">关闭</span>
           </i-switch>
         </p>
-        <p v-if="type == 2 || type == 1 || type == 4">
+        <p v-if="type === 2 || type === 1 || type === 4">
           <span>剩余提醒次数：&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <InputNumber
             v-model="balanceWarnNo"
@@ -24,7 +24,7 @@
           ></InputNumber>
           <span>&nbsp;&nbsp;次</span>
         </p>
-        <p v-if="type == 3">
+        <p v-if="type === 3">
           <span>剩余提醒时间：&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <InputNumber
             v-model="balanceWarnNo"
@@ -35,7 +35,7 @@
         </p>
         <div style="padding-left: 48px; display: flex">
           <span style="line-height: 60px; color: #000; font-size: 14px"
-            >通知人员：</span
+          >通知人员：</span
           >
           <span style="margin-left: 20px; height: auto; width: 80%">
             <CheckboxGroup
@@ -67,7 +67,7 @@
                 />
                 <span
                   style="margin-left: 53px; color: #333333; font-size: 14px"
-                  >{{ User.user.nickname }}</span
+                >{{ User.user.nickname }}</span
                 >
               </Checkbox>
             </CheckboxGroup>
@@ -85,14 +85,12 @@
             color: #fff;
             margin-top: 40px;
           "
-          >续费
+        >续费
         </Button>
       </div>
     </div>
     <div class="btn">
-      <Button
-        @click="updateBalanceRemind"
-        style="
+      <Button @click="updateBalanceRemind" style="
           width: 100px;
           height: 40px;
           font-size: 14px;
@@ -100,8 +98,7 @@
           color: #fff;
           margin-left: 120px;
           margin-top: 10px;
-        "
-        >保存设置
+        ">保存设置
       </Button>
     </div>
     <div class="ea-warnBox">
@@ -121,7 +118,7 @@ import {
   getBalanceRemind,
   getBalanceRemindList,
 } from "../../api/api";
-import { getServiceUserList } from "../../api/user-service";
+import {getServiceUserList} from "../../api/user-service";
 
 export default {
   name: "SettingBalance",
@@ -156,18 +153,16 @@ export default {
   methods: {
     //余额提醒上限
     getBalanceRemind() {
-      getBalanceRemind(this.serviceId)
-        .then((res) => {
-          if (res.data.code === 0) {
-            this.switch1 = false;
-          } else {
-            this.switch1 = true;
-            this.balanceWarnNo = res.data.content.count;
-          }
-        })
-        .catch((error) => {
-          this.$Message.warning(error.data.message);
-        });
+      getBalanceRemind(this.serviceId).then((res) => {
+        if (res.data.code === 0) {
+          this.switch1 = false;
+        } else {
+          this.switch1 = true;
+          this.balanceWarnNo = res.data.content.count;
+        }
+      }).catch((error) => {
+        this.$Message.warning(error.data.message);
+      });
     },
     //修改余额提醒设置
     updateBalanceRemind() {
@@ -177,32 +172,28 @@ export default {
         serviceId: this.serviceId,
         count: this.balanceWarnNo,
       };
-      updateBalanceRemind(data)
-        .then((res) => {
-          this.$Message.success(res.data.message);
-        })
-        .catch((error) => {
-          this.$Message.error(error.response.data.message);
-        });
+      updateBalanceRemind(data).then((res) => {
+        this.$Message.success(res.data.message);
+      }).catch((error) => {
+        this.$Message.error(error.response.data.message);
+      });
     },
     //提示人员
     getBalanceRemindList() {
       let params = {
         serviceId: this.serviceId,
       };
-      getBalanceRemindList(params)
-        .then((res) => {
-          this.selectedPersonnel = res.data.content;
-          let code = res.data.code;
-          if (code !== 0) {
-            for (let i = 0; i < this.selectedPersonnel.length; i++) {
-              this.checkbox[i] = this.selectedPersonnel[i].remindUser.id;
-            }
+      getBalanceRemindList(params).then((res) => {
+        this.selectedPersonnel = res.data.content;
+        let code = res.data.code;
+        if (code !== 0) {
+          for (let i = 0; i < this.selectedPersonnel.length; i++) {
+            this.checkbox[i] = this.selectedPersonnel[i].remindUser.id;
           }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     //余额提醒成员列表
     getServiceUserList() {
@@ -210,20 +201,18 @@ export default {
         size: 100,
         types: "创建人,管理员",
       };
-      getServiceUserList(this.serviceId, params)
-        .then((res) => {
-          this.tipsMember = res.data.content;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      getServiceUserList(this.serviceId, params).then((res) => {
+        this.tipsMember = res.data.content;
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     //续费跳转页面
     renew() {
       let num;
-      if (this.type == 2) {
+      if (this.type === 2) {
         num = this.balance;
-      } else if (this.type == 3) {
+      } else if (this.type === 3) {
         num = this.remainDay;
       }
       let url = `https://team.easyapi.com/renew/service?teamServiceId=${this.teamServiceId}`;

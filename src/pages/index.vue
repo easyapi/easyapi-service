@@ -4,22 +4,18 @@
       <span>{{ teamName }}</span>
     </div>
     <div class="row">
-      <div
-        style="
+      <div style="
           width: 100%;
           height: 50px;
           line-height: 30px;
           margin-top: 30px;
           border-bottom: 1px solid#e2e2e2;
           margin-bottom: 20px;
-        "
-      >
+        ">
         <span
           :class="{ colour: serviceCategory === '' }"
           @click="switchService('')"
-          style="font-size: 18px; color: #999999; cursor: pointer"
-          >全部</span
-        >
+          style="font-size: 18px; color: #999999; cursor: pointer">全部</span>
         <span
           :class="{ colour: serviceCategory === 1 }"
           @click="switchService(1)"
@@ -28,9 +24,7 @@
             color: #999999;
             margin-left: 45px;
             cursor: pointer;
-          "
-          >接口服务</span
-        >
+          ">接口服务</span>
         <span
           :class="{ colour: serviceCategory === 2 }"
           @click="switchService(2)"
@@ -39,9 +33,7 @@
             color: #999999;
             margin-left: 45px;
             cursor: pointer;
-          "
-          >场景服务</span
-        >
+          ">场景服务</span>
         <span
           :class="{ colour: serviceCategory === 3 }"
           @click="switchService(3)"
@@ -50,9 +42,7 @@
             color: #999999;
             margin-left: 45px;
             cursor: pointer;
-          "
-          >数据服务</span
-        >
+          ">数据服务</span>
       </div>
       <service-item :serviceCategory="serviceCategory"></service-item>
       <div class="configure">
@@ -61,25 +51,22 @@
         </p>
         <div class="configure_box" @click="jumpPage">
           <span class="configure_box_icon">
-            <img src="https://qiniu.easyapi.com/market/ip.png" alt />
+            <img src="https://qiniu.easyapi.com/market/ip.png" alt/>
           </span>
-          <strong
-            style="
+          <strong style="
               font-size: 16px;
               color: #333333;
               text-align: center;
               display: block;
               height: 40px;
-            "
-            >IP白名单</strong
-          >
+            ">IP白名单</strong>
         </div>
       </div>
     </div>
     <Modal
       title="温馨提示"
       :closable="false"
-      v-model="establish"
+      v-model="ifWithoutTeam"
       :mask-closable="false"
       @on-ok="goto"
       ok-text="创建团队"
@@ -96,7 +83,7 @@
     >
       <p>是否成功创建团队？</p>
       <div slot="footer">
-        <Button type="primary" @click="sure">已创建成功</Button>
+        <Button type="primary" @click="reload">已创建成功</Button>
       </div>
     </Modal>
   </div>
@@ -104,15 +91,15 @@
 
 <script>
 import ServiceItem from "./moudles/item";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
-  components: { ServiceItem },
+  components: {ServiceItem},
   data() {
     return {
       serviceCategory: "",
-      establish: false,
-      ifCreateSuccess: false,
+      ifWithoutTeam: false,//是否没有团队，默认有团队
+      ifCreateSuccess: false,//是否前往创建团队
     };
   },
   methods: {
@@ -120,7 +107,7 @@ export default {
      * 跳转到白名单页面
      */
     jumpPage() {
-      this.$router.push({ path: "/white-list" });
+      this.$router.push({path: "/white-list"});
     },
 
     /**
@@ -138,7 +125,10 @@ export default {
       this.ifCreateSuccess = true;
     },
 
-    sure() {
+    /**
+     * 重新加载页面
+     */
+    reload() {
       location.reload();
     },
   },
@@ -147,8 +137,8 @@ export default {
   },
   watch: {
     "$store.getters.teamList"(val) {
-      if (val.length == 0) {
-        this.establish = true;
+      if (val.length === 0) {
+        this.ifWithoutTeam = true;
       }
     },
   },

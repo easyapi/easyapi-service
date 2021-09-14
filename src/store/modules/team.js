@@ -1,10 +1,10 @@
-import { getUserTeamList, changeTeam } from "@/api/account";
+import {getUserTeamList, changeTeam} from "@/api/account";
 
 const team = {
   state: {
     currentTeam: "",
     teamName: "",
-    teamImg: "https://qiniu.easyapi.com/ea-team/default.png",
+    teamImg: "https://qiniu.easyapi.com/team/default.png",
     teamList: null,
   },
 
@@ -24,34 +24,30 @@ const team = {
   },
 
   actions: {
-    getTeamList({ commit }) {
-      getUserTeamList()
-        .then((res) => {
-          if (res.data.code == 1) {
-            commit("SET_TEAM_LIST", res.data.content);
-          } else {
-            commit("SET_TEAM_LIST", []);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    getTeamList({commit}) {
+      getUserTeamList().then((res) => {
+        if (res.data.code === 1) {
+          commit("SET_TEAM_LIST", res.data.content);
+        } else {
+          commit("SET_TEAM_LIST", []);
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     /**
      * 切换团队
      */
-    switchoverTeam({ dispatch, commit, state }, teamId) {
-      changeTeam(teamId)
-        .then((res) => {
-          if (res.data.code === 1) {
-            dispatch("getUserInfo");
-            location.hash = "";
-            location.reload();
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    switchoverTeam({dispatch, commit, state}, teamId) {
+      changeTeam(teamId).then((res) => {
+        if (res.data.code === 1) {
+          dispatch("getUserInfo");
+          location.hash = "";
+          location.reload();
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
     },
   },
 };
